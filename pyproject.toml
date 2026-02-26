@@ -1,8 +1,9 @@
 [project]
 name = "docc-parser"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Sphinx extension for parsing and integrating Apple DocC documentation."
 readme = "README.md"
+license = "BSD-2-Clause"
 requires-python = ">=3.12"
 dependencies = [
     "docutils>=0.22.4",
