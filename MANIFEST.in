@@ -1,0 +1,14 @@
+# Include the Swift source files in the source distribution
+recursive-include DocCBridge/Sources *.swift
+recursive-include DocCBridge *.swift
+include DocCBridge/Package.swift
+include DocCBridge/Package.resolved
+include DocCBridge/Makefile
+include DocCBridge/README.md
+
+# Include any built artifacts (if they somehow get generated before sdist, though they shouldn't usually be in sdist)
+graft src/docc_parser
+global-exclude *.py[cod]
+global-exclude __pycache__
+global-exclude *.so
+global-exclude *.dylib

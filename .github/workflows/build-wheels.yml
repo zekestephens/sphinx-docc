@@ -1,0 +1,65 @@
+name: Build and publish wheels
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_wheels:
+    name: Build wheels for ${{ matrix.os }}
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            runs-on: ubuntu-latest
+          - os: macos-13
+            runs-on: macos-13
+          - os: macos-latest
+            runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.22.0
+        env:
+          CIBW_BEFORE_ALL_LINUX: >
+            curl -fsSL https://download.swift.org/swift-5.10-release/ubuntu2204/swift-5.10-RELEASE/swift-5.10-RELEASE-ubuntu22.04.tar.gz -o swift.tar.gz &&
+            tar -xzf swift.tar.gz &&
+            mv swift-5.10-RELEASE-ubuntu22.04 /opt/swift &&
+            ln -s /opt/swift/usr/bin/swift /usr/bin/swift &&
+            ln -s /opt/swift/usr/bin/swiftc /usr/bin/swiftc
+          
+          # Only build for CPython 3.12+ as configured in pyproject.toml
+          CIBW_BUILD: "cp312-* cp313-*"
+          # Skip PyPy, macOS universal2 (we do discrete arches), and 32-bit platforms
+          CIBW_SKIP: "pp* *-win32 *-manylinux_i686 *-musllinux*"
+          
+          # Linux specific env setup to ensure library is found
+          CIBW_ENVIRONMENT_LINUX: "LD_LIBRARY_PATH=/opt/swift/usr/lib/swift/linux:$LD_LIBRARY_PATH"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build sdist
+        run: pipx run build --sdist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-sdist
+          path: dist/*.tar.gz
