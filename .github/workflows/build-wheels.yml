@@ -45,6 +45,8 @@ jobs:
           
           # Linux specific env setup to ensure library is found
           CIBW_ENVIRONMENT_LINUX: "LD_LIBRARY_PATH=/opt/swift/usr/lib/swift/linux:$LD_LIBRARY_PATH"
+          # macOS specific env setup to satisfy delocate-wheel bounds (SwiftDocC needs 13.0+)
+          CIBW_ENVIRONMENT_MACOS: "MACOSX_DEPLOYMENT_TARGET=13.0"
 
       - uses: actions/upload-artifact@v4
         with:
