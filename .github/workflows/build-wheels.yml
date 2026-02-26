@@ -31,7 +31,7 @@ jobs:
           CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux_2_34_x86_64:2026.02.21-1
           CIBW_MANYLINUX_AARCH64_IMAGE: quay.io/pypa/manylinux_2_34_aarch64:2026.02.21-1
           CIBW_BEFORE_ALL_LINUX: >
-            yum install -y ncurses-libs tzdata libxml2 sqlite-devel || true &&
+            yum install -y gcc-c++ libstdc++-devel ncurses-libs tzdata libxml2 sqlite-devel || true &&
             curl -fsSL https://download.swift.org/swift-6.0.3-release/ubi9/swift-6.0.3-RELEASE/swift-6.0.3-RELEASE-ubi9.tar.gz -o swift.tar.gz &&
             tar -xzf swift.tar.gz &&
             mv swift-6.0.3-RELEASE-ubi9 /opt/swift &&
