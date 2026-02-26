@@ -1,8 +1,0 @@
-Metadata-Version: 2.4
-Name: sphinx-docc
-Version: 0.1.0
-Summary: Add your description here
-Requires-Python: >=3.12
-Description-Content-Type: text/markdown
-Requires-Dist: docutils>=0.22.4
-Requires-Dist: sphinx>=9.1.0
