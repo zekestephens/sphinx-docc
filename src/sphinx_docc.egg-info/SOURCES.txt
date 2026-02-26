@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/docc_parser/__init__.py
+src/docc_parser/bridge.py
+src/docc_parser/cli.py
+src/docc_parser/converter.py
+src/docc_parser/references.py
+src/docc_parser/sphinx_ext.py
+src/sphinx_docc.egg-info/PKG-INFO
+src/sphinx_docc.egg-info/SOURCES.txt
+src/sphinx_docc.egg-info/dependency_links.txt
+src/sphinx_docc.egg-info/requires.txt
+src/sphinx_docc.egg-info/top_level.txt
