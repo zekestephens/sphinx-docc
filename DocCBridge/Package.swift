@@ -11,7 +11,7 @@ let package = Package(
     .library(
       name: "DocCBridge",
       type: .dynamic,
-      targets: ["DocCBridge"],
+      targets: ["DocCBridge"]
     ),
   ],
   dependencies: [
